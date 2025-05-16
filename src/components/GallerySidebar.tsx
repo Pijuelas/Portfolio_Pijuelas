@@ -6,10 +6,10 @@ interface GallerySidebarProps {
   categories: string[];
   tags: string[];
   searchTerm: string;
-  selectedCategory: string | null;
+  selectedCategories: string[];
   selectedTags: string[];
   onSearchChange: (term: string) => void;
-  onCategoryChange: (category: string | null) => void;
+  onCategoryToggle: (category: string) => void;
   onTagToggle: (tag: string) => void;
   onClearFilters: () => void;
 }
@@ -18,10 +18,10 @@ const GallerySidebar: React.FC<GallerySidebarProps> = ({
   categories,
   tags,
   searchTerm,
-  selectedCategory,
+  selectedCategories,
   selectedTags,
   onSearchChange,
-  onCategoryChange,
+  onCategoryToggle,
   onTagToggle,
   onClearFilters
 }) => {
@@ -78,28 +78,22 @@ const GallerySidebar: React.FC<GallerySidebarProps> = ({
             onClick={() => setIsCategoryOpen(!isCategoryOpen)}
           >
             <h3>Categories</h3>
-            {isCategoryOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            <div className={`chevron ${isCategoryOpen ? 'open' : ''}`}>
+              {isCategoryOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            </div>
           </div>
           
-          {isCategoryOpen && (
-            <div className="section-content">
+          <div className={`section-content ${isCategoryOpen ? 'open' : ''}`}>
+            {categories.map(category => (
               <div 
-                className={`category-item ${selectedCategory === null ? 'active' : ''}`}
-                onClick={() => onCategoryChange(null)}
+                key={category}
+                className={`category-item ${selectedCategories.includes(category) ? 'active' : ''}`}
+                onClick={() => onCategoryToggle(category)}
               >
-                All Categories
+                {category}
               </div>
-              {categories.map(category => (
-                <div 
-                  key={category}
-                  className={`category-item ${selectedCategory === category ? 'active' : ''}`}
-                  onClick={() => onCategoryChange(category)}
-                >
-                  {category}
-                </div>
-              ))}
-            </div>
-          )}
+            ))}
+          </div>
         </div>
         
         <div className="sidebar-section">
@@ -108,22 +102,22 @@ const GallerySidebar: React.FC<GallerySidebarProps> = ({
             onClick={() => setIsTagsOpen(!isTagsOpen)}
           >
             <h3>Tags</h3>
-            {isTagsOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            <div className={`chevron ${isTagsOpen ? 'open' : ''}`}>
+              {isTagsOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            </div>
           </div>
           
-          {isTagsOpen && (
-            <div className="section-content tags-container">
-              {tags.map(tag => (
-                <div 
-                  key={tag}
-                  className={`tag-item ${selectedTags.includes(tag) ? 'active' : ''}`}
-                  onClick={() => onTagToggle(tag)}
-                >
-                  {tag}
-                </div>
-              ))}
-            </div>
-          )}
+          <div className={`tags-container ${isTagsOpen ? 'open' : ''}`}>
+            {tags.map(tag => (
+              <div 
+                key={tag}
+                className={`tag-item ${selectedTags.includes(tag) ? 'active' : ''}`}
+                onClick={() => onTagToggle(tag)}
+              >
+                {tag}
+              </div>
+            ))}
+          </div>
         </div>
         
         <div className="mobile-close-btn" onClick={toggleMobileSidebar}>
