@@ -14,7 +14,7 @@
 .gallery-image {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 4/3;
+  aspect-ratio: 16 / 9;
 }
 
 .gallery-image img {
@@ -105,4 +105,17 @@
 
 .view-btn:hover {
   background-color: #008a91;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  padding-bottom: 4rem;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 2rem;
 }

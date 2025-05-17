@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="styles/gallery-item.css">
     <link rel="stylesheet" href="styles/gallery-sidebar.css">
     <link rel="stylesheet" href="styles/footer.css">
+    <link rel="icon" href="Icono.png" type="image/png">
 </head>
 <body>
     <nav class="navigation">
@@ -24,8 +25,6 @@
             <ul class="nav-menu">
                 <li class="nav-item"><a href="index.html">Home</a></li>
                 <li class="nav-item"><a href="gallery.html" class="active">Gallery</a></li>
-                <li class="nav-item"><a href="#about">About</a></li>
-                <li class="nav-item"><a href="#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -51,9 +50,9 @@
                 <div class="sidebar-section">
                     <div class="section-header" onclick="toggleSection('categories')">
                         <h3>Categories</h3>
-                        <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(0deg);"><path d="m18 15-6-6-6 6"></path></svg>
                     </div>
-                    <div id="categories" class="section-content">
+                    <div id="categories" class="section-content" style="display: none;">
                         <div class="category-item active" onclick="filterByCategory(null, this)">All Categories</div>
                         <div class="category-item" onclick="filterByCategory('Design', this)">Design</div>
                         <div class="category-item" onclick="filterByCategory('Photography', this)">Photography</div>
