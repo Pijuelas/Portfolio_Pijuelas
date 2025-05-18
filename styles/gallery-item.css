@@ -70,6 +70,19 @@
   letter-spacing: 1px;
 }
 
+.Variantes {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.8rem;
+  border-radius: 50px;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 .gallery-overlay h3 {
   color: white;
   font-size: 1.2rem;
@@ -90,21 +103,6 @@
   color: #ddd;
   padding: 0.1rem 0.5rem;
   border-radius: 50px;
-}
-
-.view-btn {
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.view-btn:hover {
-  background-color: #008a91;
 }
 
 .container {

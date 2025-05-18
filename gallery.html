@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="styles/gallery-sidebar.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="icon" href="Icono.png" type="image/png">
+    <script src="scripts/galeria.js" defer></script>
 </head>
 <body>
     <nav class="navigation">
@@ -25,7 +26,6 @@
             <ul class="nav-menu">
                 <li class="nav-item"><a href="index.html">Home</a></li>
                 <li class="nav-item"><a href="gallery.html" class="active">Gallery</a></li>
-                
             </ul>
         </div>
     </nav>
@@ -66,7 +66,7 @@
                         <h3>Tags</h3>
                         <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
                     </div>
-                    <div id="tags" class="section-content tags-container">
+                    <div id="tags" class="section-content tags-container" style="display: none;">
                         <div class="tag-item" onclick="toggleTag(this)">Abstract</div>
                         <div class="tag-item" onclick="toggleTag(this)">Colorful</div>
                         <div class="tag-item" onclick="toggleTag(this)">Modern</div>
@@ -121,219 +121,5 @@
         </div>
     </footer>
 
-    <script>
-        // Gallery data
-        const galleryItems = [
-            {
-                id: 1,
-                title: 'Abstract Composition',
-                category: 'Design',
-                tags: ['Abstract', 'Colorful', 'Modern'],
-                imageUrl: 'https://images.pexels.com/photos/2693212/pexels-photo-2693212.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            },
-            {
-                id: 2,
-                title: 'Architectural Wonder',
-                category: 'Photography',
-                tags: ['Architecture', 'Building', 'Modern'],
-                imageUrl: 'https://images.pexels.com/photos/256150/pexels-photo-256150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            },
-            {
-                id: 3,
-                title: 'Digital Landscape',
-                category: 'Digital',
-                tags: ['Landscape', 'Digital Art', 'Colorful'],
-                imageUrl: 'https://images.pexels.com/photos/1619317/pexels-photo-1619317.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            },
-            {
-                id: 4,
-                title: 'Portrait Study',
-                category: 'Photography',
-                tags: ['Portrait', 'People', 'Black and White'],
-                imageUrl: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            },
-            {
-                id: 5,
-                title: 'Product Showcase',
-                category: 'Design',
-                tags: ['Product', 'Minimal', 'Clean'],
-                imageUrl: 'https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            },
-            {
-                id: 6,
-                title: 'Nature Exploration',
-                category: 'Photography',
-                tags: ['Nature', 'Landscape', 'Outdoors'],
-                imageUrl: 'https://images.pexels.com/photos/1770809/pexels-photo-1770809.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            },
-            {
-                id: 7,
-                title: 'UI Design',
-                category: 'Design',
-                tags: ['UI', 'Interface', 'Modern'],
-                imageUrl: 'https://images.pexels.com/photos/3182773/pexels-photo-3182773.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            },
-            {
-                id: 8,
-                title: 'Urban Scene',
-                category: 'Photography',
-                tags: ['Urban', 'City', 'Street'],
-                imageUrl: 'https://images.pexels.com/photos/374870/pexels-photo-374870.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            }
-        ];
-
-        let currentCategory = null;
-        let selectedTags = [];
-        let searchTerm = '';
-
-        // Initialize gallery
-        function initGallery() {
-            renderGallery(galleryItems);
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-
-            // Mobile menu toggle
-            const navToggle = document.querySelector('.nav-toggle');
-            const navMenu = document.querySelector('.nav-menu');
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-            });
-
-            // Navigation scroll effect
-            window.addEventListener('scroll', () => {
-                const nav = document.querySelector('.navigation');
-                if (window.scrollY > 20) {
-                    nav.classList.add('scrolled');
-                } else {
-                    nav.classList.remove('scrolled');
-                }
-            });
-        }
-
-        // Render gallery items
-        function renderGallery(items) {
-            const grid = document.getElementById('gallery-grid');
-            grid.innerHTML = '';
-            
-            items.forEach(item => {
-                const itemHtml = `
-                    <div class="gallery-item">
-                        <div class="gallery-image">
-                            <img src="${item.imageUrl}" alt="${item.title}">
-                            <div class="gallery-overlay">
-                                <div class="overlay-content">
-                                    <span class="category">${item.category}</span>
-                                    <h3>${item.title}</h3>
-                                    <div class="item-tags">
-                                        ${item.tags.map(tag => `<span class="item-tag">${tag}</span>`).join('')}
-                                    </div>
-                                    <button class="view-btn">View Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                grid.innerHTML += itemHtml;
-            });
-
-            document.getElementById('gallery-count').textContent = `${items.length} ${items.length === 1 ? 'item' : 'items'} found`;
-        }
-
-        // Filter gallery
-        function filterGallery() {
-            let filtered = galleryItems;
-
-            // Category filter
-            if (currentCategory) {
-                filtered = filtered.filter(item => item.category === currentCategory);
-            }
-
-            // Tags filter
-            if (selectedTags.length > 0) {
-                filtered = filtered.filter(item =>
-                    selectedTags.some(tag => item.tags.includes(tag))
-                );
-            }
-
-            // Search filter
-            if (searchTerm) {
-                const term = searchTerm.toLowerCase();
-                filtered = filtered.filter(item =>
-                    item.title.toLowerCase().includes(term) ||
-                    item.tags.some(tag => tag.toLowerCase().includes(term))
-                );
-            }
-
-            renderGallery(filtered);
-        }
-
-        // Category filter
-        function filterByCategory(category, element) {
-            currentCategory = category;
-            document.querySelectorAll('.category-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
-            filterGallery();
-        }
-
-        // Tag toggle
-        function toggleTag(element) {
-            const tag = element.textContent;
-            element.classList.toggle('active');
-            
-            if (selectedTags.includes(tag)) {
-                selectedTags = selectedTags.filter(t => t !== tag);
-            } else {
-                selectedTags.push(tag);
-            }
-            
-            filterGallery();
-        }
-
-        // Search functionality
-        const searchInput = document.getElementById('search-input');
-        const clearSearchBtn = document.querySelector('.clear-search');
-
-        searchInput.addEventListener('input', function() {
-            searchTerm = this.value;
-            clearSearchBtn.style.display = searchTerm ? 'flex' : 'none';
-            filterGallery();
-        });
-
-        function clearSearch() {
-            searchInput.value = '';
-            searchTerm = '';
-            clearSearchBtn.style.display = 'none';
-            filterGallery();
-        }
-
-        // Clear all filters
-        function clearFilters() {
-            currentCategory = null;
-            selectedTags = [];
-            searchTerm = '';
-            
-            document.querySelectorAll('.category-item').forEach(item => item.classList.remove('active'));
-            document.querySelector('.category-item').classList.add('active');
-            
-            document.querySelectorAll('.tag-item').forEach(item => item.classList.remove('active'));
-            
-            searchInput.value = '';
-            clearSearchBtn.style.display = 'none';
-            
-            filterGallery();
-        }
-
-        // Toggle sections
-        function toggleSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            const header = section.previousElementSibling;
-            const chevron = header.querySelector('.chevron');
-            
-            section.style.display = section.style.display === 'none' ? 'flex' : 'none';
-            chevron.style.transform = section.style.display === 'none' ? 'rotate(0deg)' : 'rotate(180deg)';
-        }
-
-        // Initialize gallery when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initGallery);
-    </script>
 </body>
 </html>
