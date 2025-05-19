@@ -3,7 +3,7 @@ let currentCategory = null;
 let selectedTags = [];
 let searchTerm = '';
 
-// Inicializar galería
+// Inicializa la galería
 async function initGallery() {
     try {
         // Cargar galería
@@ -11,13 +11,13 @@ async function initGallery() {
         if (!response.ok) throw new Error('Failed to load gallery data');
         galleryItems = await response.json();
         renderGallery(galleryItems);
+
+        // Cargar tags desde JSON
+        await loadTags();
     } catch (error) {
-        console.error('Error loading gallery data:', error);
+        console.error('Error loading gallery or tags:', error);
         document.getElementById('gallery-grid').innerHTML = '<p>Error loading gallery.</p>';
     }
-
-    // Cargar tags dinámicamente desde JSON
-    await loadTags();
 
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
@@ -30,7 +30,6 @@ async function initGallery() {
         nav.classList.toggle('scrolled', window.scrollY > 20);
     });
 
-    // Search input
     const searchInput = document.getElementById('search-input');
     const clearSearchBtn = document.querySelector('.clear-search');
     searchInput.addEventListener('input', function () {
@@ -40,23 +39,21 @@ async function initGallery() {
     });
 }
 
-// Cargar tags desde archivo JSON
+// Carga los tags desde un JSON
 async function loadTags() {
     try {
         const response = await fetch('scripts/tags-data.json');
-        if (!response.ok) throw new Error('Failed to load tags');
+        if (!response.ok) throw new Error('Failed to load tags JSON');
 
         const tags = await response.json();
         const tagsContainer = document.getElementById('tags');
-        tagsContainer.innerHTML = ''; // Limpiar contenido anterior
+        tagsContainer.innerHTML = ''; // Limpiar contenido previo
 
         tags.forEach(tag => {
             const tagDiv = document.createElement('div');
             tagDiv.className = 'tag-item';
             tagDiv.textContent = tag;
-            tagDiv.onclick = function () {
-                toggleTag(this);
-            };
+            tagDiv.setAttribute('onclick', 'toggleTag(this)');
             tagsContainer.appendChild(tagDiv);
         });
     } catch (error) {
@@ -64,7 +61,7 @@ async function loadTags() {
     }
 }
 
-// Renderizar galería
+// Renderiza los elementos de la galería
 function renderGallery(items) {
     const grid = document.getElementById('gallery-grid');
     grid.innerHTML = '';
@@ -91,7 +88,7 @@ function renderGallery(items) {
     document.getElementById('gallery-count').textContent = `${items.length} ${items.length === 1 ? 'item' : 'items'} found`;
 }
 
-// Filtrar galería
+// Filtra la galería
 function filterGallery() {
     let filtered = galleryItems;
 
@@ -116,7 +113,7 @@ function filterGallery() {
     renderGallery(filtered);
 }
 
-// Filtrar por categoría
+// Filtro por categoría
 function filterByCategory(category, element) {
     currentCategory = category;
     document.querySelectorAll('.category-item').forEach(item => item.classList.remove('active'));
@@ -124,7 +121,7 @@ function filterByCategory(category, element) {
     filterGallery();
 }
 
-// Activar/desactivar tag
+// Alternar selección de tag
 function toggleTag(element) {
     const tag = element.textContent;
     element.classList.toggle('active');
@@ -138,25 +135,18 @@ function toggleTag(element) {
     filterGallery();
 }
 
-// Búsqueda
-const searchInput = document.getElementById('search-input');
-const clearSearchBtn = document.querySelector('.clear-search');
-
-searchInput.addEventListener('input', function () {
-    searchTerm = this.value;
-    clearSearchBtn.style.display = searchTerm ? 'flex' : 'none';
-    filterGallery();
-});
-
 // Limpiar búsqueda
 function clearSearch() {
+    const searchInput = document.getElementById('search-input');
+    const clearSearchBtn = document.querySelector('.clear-search');
+
     searchInput.value = '';
     searchTerm = '';
     clearSearchBtn.style.display = 'none';
     filterGallery();
 }
 
-// Limpiar filtros
+// Limpiar todos los filtros
 function clearFilters() {
     currentCategory = null;
     selectedTags = [];
@@ -167,13 +157,16 @@ function clearFilters() {
 
     document.querySelectorAll('.tag-item').forEach(item => item.classList.remove('active'));
 
+    const searchInput = document.getElementById('search-input');
+    const clearSearchBtn = document.querySelector('.clear-search');
+
     searchInput.value = '';
     clearSearchBtn.style.display = 'none';
 
     filterGallery();
 }
 
-// Mostrar/ocultar secciones
+// Alternar secciones
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);
     const header = section.previousElementSibling;
@@ -183,5 +176,5 @@ function toggleSection(sectionId) {
     chevron.style.transform = section.style.display === 'none' ? 'rotate(0deg)' : 'rotate(180deg)';
 }
 
-// Iniciar
+// Iniciar al cargar el DOM
 document.addEventListener('DOMContentLoaded', initGallery);

@@ -53,12 +53,10 @@
                         <h3>Categories</h3>
                         <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(0deg);"><path d="m18 15-6-6-6 6"></path></svg>
                     </div>
-                    <div id="categories" class="section-content" style="display: none;">
-                        <div class="category-item active" onclick="filterByCategory(null, this)">All Categories</div>
-                        <div class="category-item" onclick="filterByCategory('Design', this)">Design</div>
-                        <div class="category-item" onclick="filterByCategory('Photography', this)">Photography</div>
-                        <div class="category-item" onclick="filterByCategory('Digital', this)">Digital</div>
+                    <div id="categories" class="section-content categories-container" style="display: none;">
+                      <!-- Aquí se insertarán las categorías dinámicamente -->
                     </div>
+
                 </div>
 
                 <div class="sidebar-section">
@@ -66,8 +64,8 @@
                         <h3>Tags</h3>
                         <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
                     </div>
-                    <div id="tags" class="section-content tags-container" style="display: none;">
-                    <!-- Tags will be dynamically inserted here -->
+                    <div id="tags" class="section-content tags-container" style="display: flex;">
+                    <!-- Aquí se cargarán los tags dinámicamente -->
                     </div>
                 </div>
             </aside>
