@@ -51,7 +51,7 @@
                                     <div class="item-tags">
                                         ${item.tags.map(tag => `<span class="item-tag">${tag}</span>`).join('')}
                                     </div>
-                                    <span class="Variantes">${item.variantes} Variantes</span>
+                                    ${item.variantes && Number(item.variantes) > 0 ? `<span class="Variantes">${item.variantes} Variantes</span>` : ''}
                                 </div>
                             </div>
                         </div>
