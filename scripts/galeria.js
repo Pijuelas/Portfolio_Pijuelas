@@ -1,137 +1,40 @@
-        // Gallery data
-        const galleryItems = [
-            {
-                id: 1,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GqHP1W7WMAAYZVg?format=jpg&name=large'
-            },
-            {
-                id: 2,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GqHOAW6XcAAX7pu?format=jpg&name=large'
-            },
-            {
-                id: 3,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GqHKGPlX0AIMNfz?format=jpg&name=large'
-            },
-            {
-                id: 4,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GrQVoxXXIAAjgfp?format=jpg&name=large'
-            },
-            {
-                id: 5,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GrQUtQ3XoAABOm3?format=jpg&name=large'
-            },
-            {
-                id: 6,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GrQUt1GW4AA5eDO?format=jpg&name=large'
-            },
-            {
-                id: 7,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GrQUftNX0AE9RR3?format=jpg&name=large'
-            },
-            {
-                id: 8,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GrQUOLbWwAApdIp?format=jpg&name=large'
-            },
-            {
-                id: 9,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GqHP1UbWAAEnm11?format=jpg&name=large'
-            },            
-            {
-                id: 10,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GqHP1WfXoAEvOE4?format=jpg&name=large'
-            },        
-            {
-                id: 11,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'https://pbs.twimg.com/media/GqHP1X5XsAEjPGp?format=jpg&name=large'
-            },
-            {
-                id: 12,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'Miniaturas/Video opera.png'
-            },
-            {
-                id: 13,
-                titulo: '',
-                variantes: '',
-                category: '',
-                tags: ['', '', ''],
-                imageUrl: 'Miniaturas/Spinner 1.png'
-            }
-        ];
-
+        let galleryItems = [];
         let currentCategory = null;
         let selectedTags = [];
         let searchTerm = '';
 
-        // Initialize gallery
-        function initGallery() {
-            renderGallery(galleryItems);
+        async function initGallery() {
+            try {
+                const response = await fetch('scripts/gallery-data.json');
+                if (!response.ok) throw new Error('Failed to load gallery data');
+                galleryItems = await response.json();
+                renderGallery(galleryItems);
+            } catch (error) {
+                console.error('Error loading gallery data:', error);
+                document.getElementById('gallery-grid').innerHTML = '<p>Error loading gallery.</p>';
+            }
+
             document.getElementById('current-year').textContent = new Date().getFullYear();
 
-            // Mobile menu toggle
             const navToggle = document.querySelector('.nav-toggle');
             const navMenu = document.querySelector('.nav-menu');
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-            });
+            navToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
 
-            // Navigation scroll effect
             window.addEventListener('scroll', () => {
                 const nav = document.querySelector('.navigation');
-                if (window.scrollY > 20) {
-                    nav.classList.add('scrolled');
-                } else {
-                    nav.classList.remove('scrolled');
-                }
+                nav.classList.toggle('scrolled', window.scrollY > 20);
+            });
+
+            // Search input
+            const searchInput = document.getElementById('search-input');
+            const clearSearchBtn = document.querySelector('.clear-search');
+            searchInput.addEventListener('input', function () {
+                searchTerm = this.value;
+                clearSearchBtn.style.display = searchTerm ? 'flex' : 'none';
+                filterGallery();
             });
         }
+
 
         // Render gallery items
         function renderGallery(items) {
