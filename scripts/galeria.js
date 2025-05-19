@@ -6,18 +6,17 @@ let searchTerm = '';
 // Inicializa la galería
 async function initGallery() {
     try {
-        // Cargar galería
         const response = await fetch('scripts/galeria_miniaturas.json');
         if (!response.ok) throw new Error('Failed to load gallery data');
         galleryItems = await response.json();
         renderGallery(galleryItems);
-
-        // Cargar tags desde JSON
-        await loadTags();
     } catch (error) {
-        console.error('Error loading gallery or tags:', error);
+        console.error('Error loading gallery data:', error);
         document.getElementById('gallery-grid').innerHTML = '<p>Error loading gallery.</p>';
     }
+
+    await loadTags();
+    await loadCategories();
 
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
@@ -39,29 +38,50 @@ async function initGallery() {
     });
 }
 
-// Carga los tags desde un JSON
+// Cargar tags desde JSON
 async function loadTags() {
     try {
         const response = await fetch('scripts/tags-data.json');
         if (!response.ok) throw new Error('Failed to load tags JSON');
 
         const tags = await response.json();
-        const tagsContainer = document.getElementById('tags');
-        tagsContainer.innerHTML = ''; // Limpiar contenido previo
+        const container = document.getElementById('tags');
 
         tags.forEach(tag => {
-            const tagDiv = document.createElement('div');
-            tagDiv.className = 'tag-item';
-            tagDiv.textContent = tag;
-            tagDiv.setAttribute('onclick', 'toggleTag(this)');
-            tagsContainer.appendChild(tagDiv);
+            const div = document.createElement('div');
+            div.className = 'tag-item';
+            div.textContent = tag;
+            div.onclick = () => toggleTag(div);
+            container.appendChild(div);
         });
     } catch (error) {
         console.error('Error loading tags:', error);
     }
 }
 
-// Renderiza los elementos de la galería
+// Cargar categorías desde JSON
+async function loadCategories() {
+    try {
+        const response = await fetch('scripts/categories-data.json');
+        if (!response.ok) throw new Error('Failed to load categories JSON');
+
+        const categories = await response.json();
+        const container = document.getElementById('categories');
+
+        categories.forEach((category, index) => {
+            const div = document.createElement('div');
+            div.className = 'category-item';
+            div.textContent = category;
+            div.onclick = () => filterByCategory(category === 'All' ? null : category, div);
+            if (index === 0) div.classList.add('active');
+            container.appendChild(div);
+        });
+    } catch (error) {
+        console.error('Error loading categories:', error);
+    }
+}
+
+// Renderiza los ítems de la galería
 function renderGallery(items) {
     const grid = document.getElementById('gallery-grid');
     grid.innerHTML = '';
@@ -72,7 +92,7 @@ function renderGallery(items) {
                 <div class="gallery-image">
                     <img src="${item.imageUrl}" alt="${item.titulo}">
                     <div class="gallery-overlay">
-                        <div class="overlay-content">                                    
+                        <div class="overlay-content">
                             <div class="item-tags">
                                 ${item.tags.map(tag => `<span class="item-tag">${tag}</span>`).join('')}
                             </div>
@@ -113,7 +133,7 @@ function filterGallery() {
     renderGallery(filtered);
 }
 
-// Filtro por categoría
+// Filtra por categoría
 function filterByCategory(category, element) {
     currentCategory = category;
     document.querySelectorAll('.category-item').forEach(item => item.classList.remove('active'));
@@ -121,7 +141,7 @@ function filterByCategory(category, element) {
     filterGallery();
 }
 
-// Alternar selección de tag
+// Activa/desactiva tags
 function toggleTag(element) {
     const tag = element.textContent;
     element.classList.toggle('active');
@@ -135,7 +155,7 @@ function toggleTag(element) {
     filterGallery();
 }
 
-// Limpiar búsqueda
+// Limpia el campo de búsqueda
 function clearSearch() {
     const searchInput = document.getElementById('search-input');
     const clearSearchBtn = document.querySelector('.clear-search');
@@ -146,7 +166,7 @@ function clearSearch() {
     filterGallery();
 }
 
-// Limpiar todos los filtros
+// Limpia todos los filtros
 function clearFilters() {
     currentCategory = null;
     selectedTags = [];
@@ -166,7 +186,7 @@ function clearFilters() {
     filterGallery();
 }
 
-// Alternar secciones
+// Alterna secciones del sidebar
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);
     const header = section.previousElementSibling;
@@ -176,5 +196,5 @@ function toggleSection(sectionId) {
     chevron.style.transform = section.style.display === 'none' ? 'rotate(0deg)' : 'rotate(180deg)';
 }
 
-// Iniciar al cargar el DOM
+// Cuando el DOM esté listo, iniciar galería
 document.addEventListener('DOMContentLoaded', initGallery);
