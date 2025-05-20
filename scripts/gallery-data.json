@@ -101,6 +101,49 @@
         "variantes": "",
         "category": "",
         "tags": ["", "", ""],
-        "imageUrl": "Miniaturas/Spinner 1.png"
+        "imageUrl": "https://pbs.twimg.com/media/GraCEo3WUAEIiq4?format=jpg&name=large"
+    },
+    {
+        "id": 14,
+        "titulo": "",
+        "variantes": "",
+        "category": "",
+        "tags": ["", "", ""],
+        "imageUrl": "https://pbs.twimg.com/media/GraCEoaW8AA418_?format=jpg&name=large"
+    },
+    {
+        "id": 15,
+        "titulo": "",
+        "variantes": "",
+        "category": "",
+        "tags": ["", "", ""],
+        "imageUrl": "https://pbs.twimg.com/media/GraCEo3WsAAtkcJ?format=jpg&name=large"
+    },
+    {
+        "id": 16,
+        "titulo": "",
+        "variantes": "",
+        "category": "",
+        "tags": ["", "", ""],
+        "imageUrl": "https://pbs.twimg.com/media/GraCEsLWMAAY5C7?format=jpg&name=large"
+    },
+    {
+        "id": 17,
+        "titulo": "",
+        "variantes": "",
+        "category": "",
+        "tags": ["", "", ""],
+        "imageUrl": "https://pbs.twimg.com/media/Gra68-XXsAAQOCi?format=jpg&name=large"
+    },
+    {
+        "id": 18,
+        "titulo": "",
+        "variantes": "",
+        "category": "",
+        "tags": ["", "", ""],
+        "imageUrl": ""
     }
+
+
+
 ]
