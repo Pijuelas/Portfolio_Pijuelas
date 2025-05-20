@@ -21,7 +21,7 @@
 body {
   margin: 0;
   font-family: var(--font-main);
-  background-color: var(--bg-color);
+  background-color: var(--main-bg-color);
   color: var(--secondary-color);
   scroll-behavior: smooth;
   line-height: 1.5;
