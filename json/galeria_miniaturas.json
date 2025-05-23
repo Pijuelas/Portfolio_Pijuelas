@@ -1,0 +1,138 @@
+[
+    {
+        "id": 1,
+        "titulo": "Llorar",
+        "variantes": "2",
+        "category": "Fotografía",
+        "tags": ["arte", "hola", "expresión"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHP1W7WMAAYZVg?format=jpg&name=large"
+    },
+    {
+        "id": 2,
+        "titulo": "Sin Título",
+        "variantes": "1",
+        "category": "Digital",
+        "tags": ["abstracto", "digital", "color"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHOAW6XcAAX7pu?format=jpg&name=large"
+    },
+    {
+        "id": 3,
+        "titulo": "Composición #3",
+        "variantes": "3",
+        "category": "Digital",
+        "tags": ["geométrico", "minimalismo", "diseño"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHKGPlX0AIMNfz?format=jpg&name=large"
+    },
+    {
+        "id": 4,
+        "titulo": "Estudio en Rojo",
+        "variantes": "2",
+        "category": "Fotografía",
+        "tags": ["luz", "color", "abstracción"],
+        "imageUrl": "https://pbs.twimg.com/media/GrQVoxXXIAAjgfp?format=jpg&name=large"
+    },
+    {
+        "id": 5,
+        "titulo": "Sin Título II",
+        "variantes": "1",
+        "category": "Digital",
+        "tags": ["textura", "color", "forma"],
+        "imageUrl": "https://pbs.twimg.com/media/GrQUtQ3XoAABOm3?format=jpg&name=large"
+    },
+    {
+        "id": 6,
+        "titulo": "Fragmentos",
+        "variantes": "5",
+        "category": "Mixta",
+        "tags": ["composición", "forma", "digital"],
+        "imageUrl": "https://pbs.twimg.com/media/GrQUt1GW4AA5eDO?format=jpg&name=large"
+    },
+    {
+        "id": 7,
+        "titulo": "Ritmo Vertical",
+        "variantes": "2",
+        "category": "Fotografía",
+        "tags": ["luz", "composición", "ritmo"],
+        "imageUrl": "https://pbs.twimg.com/media/GrQUftNX0AE9RR3?format=jpg&name=large"
+    },
+    {
+        "id": 8,
+        "titulo": "Paisaje Interior",
+        "variantes": "3",
+        "category": "Digital",
+        "tags": ["paisaje", "interior", "textura"],
+        "imageUrl": "https://pbs.twimg.com/media/GrQUOLbWwAApdIp?format=jpg&name=large"
+    },
+    {
+        "id": 9,
+        "titulo": "Estudio #9",
+        "variantes": "1",
+        "category": "Fotografía",
+        "tags": ["estudio", "luz", "sombra"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHP1UbWAAEnm11?format=jpg&name=large"
+    },
+    {
+        "id": 10,
+        "titulo": "Contrastes",
+        "variantes": "2",
+        "category": "Digital",
+        "tags": ["contraste", "color", "forma"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHP1WfXoAEvOE4?format=jpg&name=large"
+    },
+    {
+        "id": 11,
+        "titulo": "Serenidad",
+        "variantes": "1",
+        "category": "Fotografía",
+        "tags": ["calma", "luz", "atmósfera"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHP1X5XsAEjPGp?format=jpg&name=large"
+    },
+    {
+        "id": 12,
+        "titulo": "Video Opera",
+        "variantes": "1",
+        "category": "Video",
+        "tags": ["video", "opera", "movimiento"],
+        "imageUrl": "Miniaturas/Video opera.png"
+    },
+    {
+        "id": 13,
+        "titulo": "Spinner",
+        "variantes": "3",
+        "category": "Digital",
+        "tags": ["movimiento", "rotación", "animación"],
+        "imageUrl": "Miniaturas/Spinner 1.png"
+    },
+    {
+        "id": 14,
+        "titulo": "Perspectiva",
+        "variantes": "2",
+        "category": "Fotografía",
+        "tags": ["espacio", "perspectiva", "geometría"],
+        "imageUrl": "https://pbs.twimg.com/media/GraCEoaW8AA418_?format=jpg&name=large"
+    },
+    {
+        "id": 15,
+        "titulo": "Reflejos",
+        "variantes": "4",
+        "category": "Digital",
+        "tags": ["luz", "reflejo", "agua"],
+        "imageUrl": "https://pbs.twimg.com/media/GraCEo3WsAAtkcJ?format=jpg&name=large"
+    },
+    {
+        "id": 16,
+        "titulo": "Secuencia #16",
+        "variantes": "5",
+        "category": "Mixta",
+        "tags": ["secuencia", "ritmo", "movimiento"],
+        "imageUrl": "https://pbs.twimg.com/media/GraCEsLWMAAY5C7?format=jpg&name=large"
+    },
+    {
+        "id": 17,
+        "titulo": "Contemplación",
+        "variantes": "1",
+        "category": "Fotografía",
+        "tags": ["espacio", "tranquilidad", "luz"],
+        "imageUrl": "https://pbs.twimg.com/media/Gra68-XXsAAQOCi?format=jpg&name=large"
+    }
+]
