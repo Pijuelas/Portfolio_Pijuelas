@@ -1,7 +1,7 @@
 // scripts/imagen.js
 
 // Cargar datos desde el archivo JSON
-fetch('../json/galeria_miniaturas.json')
+fetch('/Portfolio_Pijuelas/json/galeria_miniaturas.json')
   .then(response => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
