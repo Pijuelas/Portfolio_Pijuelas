@@ -1,0 +1,139 @@
+[
+    {
+        "id": 1,
+        "titulo": "Como conseguir saldo infinito en steam gratis",
+        "category": "Saldo",
+        "tags": ["arte", "hola", "expresión"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHP1W7WMAAYZVg?format=jpg&name=large",
+        "variantesUrl": ["https://pbs.twimg.com/media/Gs61oegWwAAE8z4?format=jpg&name=large"]
+    },
+    {
+        "id": 2,
+        "titulo": "La epidemia de vendehumos de YouTube",
+        "category": "Analisis",
+        "tags": ["Vendehumos", "digital", "color"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHOAW6XcAAX7pu?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 3,
+        "titulo": "Crecer en YouTube",
+        "category": "Digital",
+        "tags": ["", "", ""],
+        "imageUrl": "https://pbs.twimg.com/media/GqHKGPlX0AIMNfz?format=jpg&name=large",
+        "variantesUrl": ["https://pbs.twimg.com/media/GqHKGPlX0AIMNfz?format=jpg&name=large",
+        "https://pbs.twimg.com/media/GqHKIqMWcAA99pJ?format=jpg&name=large",
+        "https://pbs.twimg.com/media/GqHKJlUXYAAe7qR?format=jpg&name=large"]
+    },
+    {
+        "id": 4,
+        "titulo": "Reparar JoyCon 3$",
+        "category": "",
+        "tags": ["", "", ""],
+        "imageUrl": "https://pbs.twimg.com/media/GrQVoxXXIAAjgfp?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 5,
+        "titulo": "Granadas Rapidas",
+        "category": "",
+        "tags": ["", "", ""],
+        "imageUrl": "https://pbs.twimg.com/media/GrQUtQ3XoAABOm3?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 6,
+        "titulo": "Top 10 humos Inferno",
+        "category": "Mixta",
+        "tags": ["composición", "forma", "digital"],
+        "imageUrl": "https://pbs.twimg.com/media/GrQUt1GW4AA5eDO?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 7,
+        "titulo": "El Fin de TikTok",
+        "category": "Fotografía",
+        "tags": ["luz", "composición", "ritmo"],
+        "imageUrl": "https://pbs.twimg.com/media/GrQUftNX0AE9RR3?format=jpg&name=large",
+        "variantesUrl": ["https://pbs.twimg.com/media/GrQUdOUXkAAC5tJ?format=jpg&name=large",
+        "https://pbs.twimg.com/media/GrQUg5WXcAAZtDm?format=jpg&name=large"]
+    },
+    {
+        "id": 8,
+        "titulo": "Paisaje Interior",
+        "category": "Digital",
+        "tags": ["paisaje", "interior", "textura"],
+        "imageUrl": "https://pbs.twimg.com/media/GrQUOLbWwAApdIp?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 9,
+        "titulo": "Estudio #9",
+        "category": "Fotografía",
+        "tags": ["estudio", "luz", "sombra"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHP1UbWAAEnm11?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 10,
+        "titulo": "Contrastes",
+        "category": "Digital",
+        "tags": ["contraste", "color", "forma"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHP1WfXoAEvOE4?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 11,
+        "titulo": "Serenidad",
+        "category": "Fotografía",
+        "tags": ["calma", "luz", "atmósfera"],
+        "imageUrl": "https://pbs.twimg.com/media/GqHP1X5XsAEjPGp?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 12,
+        "titulo": "Video Opera",
+        "category": "Video",
+        "tags": ["video", "opera", "movimiento"],
+        "imageUrl": "Miniaturas/Video opera.png"
+    },
+    {
+        "id": 13,
+        "titulo": "Spinner",
+        "category": "Digital",
+        "tags": ["movimiento", "rotación", "animación"],
+        "imageUrl": "Miniaturas/Spinner 1.png"
+    },
+    {
+        "id": 14,
+        "titulo": "Perspectiva",
+        "category": "Fotografía",
+        "tags": ["espacio", "perspectiva", "geometría"],
+        "imageUrl": "https://pbs.twimg.com/media/GraCEoaW8AA418_?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 15,
+        "titulo": "Reflejos",
+        "category": "Digital",
+        "tags": ["luz", "reflejo", "agua"],
+        "imageUrl": "https://pbs.twimg.com/media/GraCEo3WsAAtkcJ?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 16,
+        "titulo": "Secuencia #16",
+        "category": "Mixta",
+        "tags": ["secuencia", "ritmo", "movimiento"],
+        "imageUrl": "https://pbs.twimg.com/media/GraCEsLWMAAY5C7?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 17,
+        "titulo": "Contemplación",
+        "category": "Fotografía",
+        "tags": ["espacio", "tranquilidad", "luz"],
+        "imageUrl": "https://pbs.twimg.com/media/Gra68-XXsAAQOCi?format=jpg&name=large",
+        "variantesUrl": []
+    }
+]
