@@ -73,15 +73,19 @@ function mostrarImagen(imagenes) {
 // Cargar variantes como miniaturas (y permitir intercambiar con la principal)
 function cargarMiniaturas(imagenes) {
   const currentId = getIdFromURL();
-  const thumbnailsContainer = document.getElementById('thumbnails');
+  const contenedor = document.getElementById('imagen-detalle');
   const mainImage = document.querySelector('.main-image-container img');
 
-  if (!thumbnailsContainer || !mainImage) return;
-
   const imagen = imagenes.find(img => img.id === currentId);
-  if (!imagen || !Array.isArray(imagen.variantesUrl)) return;
+  if (!imagen || !Array.isArray(imagen.variantesUrl) || imagen.variantesUrl.length === 0) return;
 
-  thumbnailsContainer.innerHTML = '';
+  // Crear contenedor de miniaturas dinámicamente
+  const thumbnailsContainer = document.createElement('div');
+  thumbnailsContainer.className = 'thumbnails-container';
+
+  const thumbnails = document.createElement('div');
+  thumbnails.className = 'thumbnails';
+  thumbnails.id = 'thumbnails';
 
   imagen.variantesUrl.forEach((url, index) => {
     const thumbElement = document.createElement('div');
@@ -92,7 +96,7 @@ function cargarMiniaturas(imagenes) {
     thumbImg.alt = `Variante ${index + 1}`;
     thumbImg.loading = 'lazy';
 
-    // Intercambio cíclico entre miniatura y principal
+    // Intercambio cíclico
     thumbElement.addEventListener('click', () => {
       const temp = mainImage.src;
       mainImage.src = thumbImg.src;
@@ -100,6 +104,9 @@ function cargarMiniaturas(imagenes) {
     });
 
     thumbElement.appendChild(thumbImg);
-    thumbnailsContainer.appendChild(thumbElement);
+    thumbnails.appendChild(thumbElement);
   });
+
+  thumbnailsContainer.appendChild(thumbnails);
+  contenedor.insertBefore(thumbnailsContainer, document.querySelector('.image-info'));
 }
