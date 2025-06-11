@@ -43,12 +43,6 @@ function mostrarImagen(imagenes) {
       <img src="${imageUrl}" alt="${titulo || 'Imagen'}" loading="lazy">
     </div>
     
-    <div class="thumbnails-container">
-      <div class="thumbnails" id="thumbnails">
-        <!-- Miniaturas serán cargadas dinámicamente -->
-      </div>
-    </div>
-    
     <div class="image-info">
       <h1>${titulo || 'Sin título'}</h1>
       <p class="subtitle">${category || 'Arte digital'}</p>
@@ -69,6 +63,7 @@ function mostrarImagen(imagenes) {
     </div>
   `;
 }
+
 
 // Cargar variantes como miniaturas (y permitir intercambiar con la principal)
 function cargarMiniaturas(imagenes) {
@@ -110,4 +105,3 @@ function cargarMiniaturas(imagenes) {
   thumbnailsContainer.appendChild(thumbnails);
   contenedor.insertBefore(thumbnailsContainer, document.querySelector('.image-info'));
 }
-
