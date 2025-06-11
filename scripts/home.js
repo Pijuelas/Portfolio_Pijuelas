@@ -53,43 +53,47 @@
 
     // Initialize everything after DOM content loaded
     document.addEventListener('DOMContentLoaded', () => {
-        const scrollIndicator = document.querySelector('.scroll-indicator');
-        const maxScroll = 200;
-    // Text rotator initialization
-    const textElement = document.querySelector('.tagline');
-    setTimeout(() => {
-        new TextRotator(textElement, ['Thumbnail Designer', 'Visual Creator', 'Content Artist'], 2000);
-    }, 25); // Espera 25ms antes de iniciar la animación
-
-    // Add animation class to logo content
-    setTimeout(() => {
-        document.querySelector('.logo-content').classList.add('animate');
-    }, 300);
-
-    // Update current year in footer
-    document.getElementById('current-year').textContent = new Date().getFullYear();
-
-    // Mobile menu toggle
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-    });
-
-    // Después de 6 segundos, aparece con opacidad 1
-    setTimeout(() => {
-        scrollIndicator.style.opacity = 1;
-    }, 6000);
-    
-    window.addEventListener('scroll', () => {
-    // Cuánto has scrolleado en píxeles verticalmente
-    const scrollY = window.scrollY;
-
-    if (parseFloat(scrollIndicator.style.opacity) > 0) {
-        let opacity = 1 - scrollY / maxScroll;
-        opacity = Math.min(Math.max(opacity, 0), 1);
-        scrollIndicator.style.opacity = opacity;
-    }
-
-    });
+    loadFeaturedGallery();
 });
+
+async function loadFeaturedGallery() {
+    try {
+        const response = await fetch('json/galeria_miniaturas.json');
+        if (!response.ok) throw new Error('No se pudo cargar la galería destacada');
+        let items = await response.json();
+
+        // Ordenar por ID ascendente
+        items.sort((a, b) => a.id - b.id);
+
+        const featuredGrid = document.querySelector('.featured-grid');
+        featuredGrid.innerHTML = '';
+
+        items.forEach(item => {
+            const itemHtml = `
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <img src="${item.imageUrl}" alt="${item.titulo}">
+                        <div class="gallery-overlay">
+                            <div class="overlay-content">
+                                <span class="category">${item.category}</span>
+                                <h3>${item.titulo}</h3>
+                                <div class="item-tags">
+                                    ${item.tags.map(tag => `<span class="item-tag">${tag}</span>`).join('')}
+                                </div>
+                                <a href="imagen.html?id=${item.id}">
+                                    <button class="view-btn">View Details</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            featuredGrid.innerHTML += itemHtml;
+        });
+
+    } catch (error) {
+        console.error('Error cargando la galería destacada:', error);
+        const featuredGrid = document.querySelector('.featured-grid');
+        featuredGrid.innerHTML = '<p>Error al cargar la galería destacada.</p>';
+    }
+}
