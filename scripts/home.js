@@ -1,4 +1,4 @@
-// Text rotation animation
+// Text rotation animation (conservado)
 class TextRotator {
     constructor(el, toRotate, period) {
         this.toRotate = toRotate;
@@ -25,7 +25,6 @@ class TextRotator {
         let delta;
 
         if (this.loopNum === 0 && !this.isDeleting) {
-            // Fase de aceleración inicial para la primera palabra
             const progress = this.txt.length / this.toRotate[0].length;
             const eased = 225 - progress * 100;
             delta = eased;
@@ -33,9 +32,7 @@ class TextRotator {
             delta = 200 - Math.random() * 100;
         }
 
-        if (this.isDeleting) {
-            delta /= 2;
-        }
+        if (this.isDeleting) delta /= 2;
 
         if (!this.isDeleting && this.txt === fullTxt) {
             delta = this.period;
@@ -50,16 +47,16 @@ class TextRotator {
     }
 }
 
-// Initialize after DOM is ready
+// DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
-    loadFeaturedVideos(); // Solo cargar los videos destacados
+    loadFeaturedVideos();
 });
 
+// Cargar solo 3 videos desde videos-index.json
 async function loadFeaturedVideos() {
     try {
         const response = await fetch('json/videos-index.json');
         if (!response.ok) throw new Error('No se pudo cargar la galería de videos');
-
         let items = await response.json();
 
         // Mostrar solo los primeros 3
