@@ -1,7 +1,7 @@
 // scripts/imagen.js
 
-// Cargar datos desde el archivo JSON
-fetch('../json/galeria_miniaturas.json')
+// Cargar datos desde el archivo JSON (ruta absoluta para GitHub Pages)
+fetch('/Portfolio_Pijuelas/json/galeria_miniaturas.json')
   .then(response => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -70,7 +70,7 @@ function mostrarImagen(imagenes) {
   `;
 }
 
-// Cargar variantes como miniaturas (sin incluir la imagen principal)
+// Cargar variantes como miniaturas (y permitir intercambiar con la principal)
 function cargarMiniaturas(imagenes) {
   const currentId = getIdFromURL();
   const thumbnailsContainer = document.getElementById('thumbnails');
@@ -92,16 +92,14 @@ function cargarMiniaturas(imagenes) {
     thumbImg.alt = `Variante ${index + 1}`;
     thumbImg.loading = 'lazy';
 
-    thumbElement.appendChild(thumbImg);
-
+    // Intercambio cíclico entre miniatura y principal
     thumbElement.addEventListener('click', () => {
-      // Intercambiar la imagen principal con la de la miniatura
-      const tempSrc = mainImage.src;
+      const temp = mainImage.src;
       mainImage.src = thumbImg.src;
-      thumbImg.src = tempSrc;
+      thumbImg.src = temp;
     });
 
+    thumbElement.appendChild(thumbImg);
     thumbnailsContainer.appendChild(thumbElement);
   });
 }
-
