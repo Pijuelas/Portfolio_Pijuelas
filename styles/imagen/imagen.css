@@ -17,8 +17,6 @@
   flex-direction: column;
   background-color: transparent;
   border-radius: 12px;
-
-  
   animation: fadeIn 0.5s ease-in-out;
 }
 
@@ -41,7 +39,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 100%;
   aspect-ratio: 16/9;
   overflow: hidden;
   background-color: #000;
@@ -61,6 +58,13 @@
   transform: scale(1.02);
 }
 
+/* Compact and clean image info */
+.image-info {
+  padding: 2rem;
+  background-color: var(--card-bg-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
 
 .image-info h1 {
   font-family: var(--font-heading);
@@ -80,10 +84,6 @@
 }
 
 .image-info .description {
-  max-width: 1200px;
-  width: 100%;
-  display: flex;
-  position: relative;
   font-family: var(--font-main);
   line-height: 1.6;
   color: var(--secondary-color);
@@ -139,8 +139,7 @@
   margin: 0 auto;
   width: 100%;
   display: flex;
-  position: relative;
-  justify-content: center; 
+  justify-content: center;
   overflow-x: auto;
   background-color: rgba(0, 0, 0, 0.3);
   padding: 1rem 0;
@@ -235,20 +234,6 @@
   animation: pulse 1.5s infinite ease-in-out;
 }
 
-.image-info {
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--card-bg-color);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.5s ease-in-out;
-  padding: 1.5rem;
-}
-
 @keyframes pulse {
   0% { opacity: 0.5; }
   50% { opacity: 1; }
@@ -260,15 +245,15 @@
   .gallery-page {
     padding: 1rem;
   }
-  
+
   .image-info {
     padding: 1.5rem;
   }
-  
+
   .image-info h1 {
     font-size: 2rem;
   }
-  
+
   .thumbnail {
     width: 100px;
     height: 70px;
@@ -279,11 +264,11 @@
   .image-info h1 {
     font-size: 1.75rem;
   }
-  
+
   .image-info .subtitle {
     font-size: 1rem;
   }
-  
+
   .thumbnail {
     width: 80px;
     height: 60px;
