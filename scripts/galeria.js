@@ -11,7 +11,7 @@ const tagsWithCompositionLabel = ["Pyramid", "Symmetrical", "Asymmetrical", "Rad
 function getDisplayTag(tag) {
     const trimmedTag = tag.trim();
     if (trimmedTag === "Text") {
-        return "Text as Main Element";  // 🔁 CAMBIO: texto especial para "Text"
+        return "Text as Main Element";
     }
     return tagsWithCompositionLabel.includes(trimmedTag) ? `${trimmedTag} Composition` : trimmedTag;
 }
@@ -22,15 +22,17 @@ async function initGallery() {
         const response = await fetch('json/galeria_miniaturas.json');
         if (!response.ok) throw new Error('Failed to load gallery data');
         galleryItems = await response.json();
-        renderGallery(galleryItems);
     } catch (error) {
         console.error('Error loading gallery data:', error);
         document.getElementById('gallery-grid').innerHTML = '<p>Error loading gallery.</p>';
+        return; // 🚫 Detener si no se cargó la galería
     }
 
     await loadTags();
     await loadCategories();
-    //await loadRating();   NO MOSTRAR DE MOMENTO HASTA HABER TERMINADO
+    // await loadRating(); // no mostrar de momento
+
+    renderGallery(galleryItems); // ✅ Llamar aquí después de todo cargado
 
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
@@ -86,11 +88,8 @@ async function loadTags() {
         tags.forEach(tag => {
             const div = document.createElement('div');
             div.className = 'tag-item';
-
-            // Mostrar versión visual, guardar versión original para filtro
             div.textContent = getDisplayTag(tag);
-            div.dataset.rawTag = tag.trim();  // 🔁 CAMBIO: valor original para filtro
-
+            div.dataset.rawTag = tag.trim();
             div.onclick = () => toggleTag(div);
             container.appendChild(div);
         });
@@ -99,7 +98,7 @@ async function loadTags() {
     }
 }
 
-// Renderiza los ítems de la galería con enlace a imagen.html?id={id}
+// Renderiza los ítems de la galería
 function renderGallery(items) {
     const grid = document.getElementById('gallery-grid');
     grid.innerHTML = '';
@@ -169,7 +168,6 @@ function filterByCategory(category, element) {
 
 // Activa/desactiva tags
 function toggleTag(element) {
-    // 🔁 CAMBIO: Usar valor original, no el mostrado
     const tag = element.dataset.rawTag || element.textContent;
     element.classList.toggle('active');
 
@@ -211,23 +209,22 @@ function clearSearch() {
 function clearFilters() {
     currentCategory = null;
     selectedTags = [];
+    selectedRating = [];
     searchTerm = '';
 
     document.querySelectorAll('.category-item').forEach(item => item.classList.remove('active'));
-    document.querySelector('.category-item').classList.add('active');
+    const firstCategory = document.querySelector('.category-item');
+    if (firstCategory) firstCategory.classList.add('active');
 
     document.querySelectorAll('.tag-item').forEach(item => item.classList.remove('active'));
+    document.querySelectorAll('.rating-item').forEach(item => item.classList.remove('active'));
 
     const searchInput = document.getElementById('search-input');
     const clearSearchBtn = document.querySelector('.clear-search');
-
     searchInput.value = '';
     clearSearchBtn.style.display = 'none';
 
-    selectedRating = [];
-    document.querySelectorAll('.rating-item').forEach(item => item.classList.remove('active'));
-
-    filterGallery();
+    renderGallery(galleryItems); // 🔁 Usar todos sin filtro
 }
 
 // Alterna secciones del sidebar
@@ -240,5 +237,5 @@ function toggleSection(sectionId) {
     chevron.style.transform = section.style.display === 'none' ? 'rotate(0deg)' : 'rotate(180deg)';
 }
 
-// Cuando el DOM esté listo, iniciar galería
+// Iniciar la galería al cargar DOM
 document.addEventListener('DOMContentLoaded', initGallery);
