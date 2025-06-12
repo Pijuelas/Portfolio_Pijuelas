@@ -1,52 +1,33 @@
+// Estado global para filtros y datos
 let galleryItems = [];
-let currentCategory = null;
-let selectedRating = [];
+let filteredItems = [];
+
 let selectedTags = [];
+let currentCategory = null;
+let selectedRating = []; // Por ahora no usado porque está desactivado en HTML
 let searchTerm = '';
 
-// Etiquetas con sufijo "Composition" para filtro visual
-const tagsWithCompositionLabel = ["Pyramid", "Symmetrical", "Asymmetrical", "Radial", "Text"];
-
-// Traduce visualmente una etiqueta para mostrar en filtros (tags que se muestran en filtros)
-function getDisplayTagForFilter(tag) {
-  const trimmedTag = tag.trim();
-  if (trimmedTag === "Text") return "Text as Main Element";
-  if (tagsWithCompositionLabel.includes(trimmedTag)) return `${trimmedTag} Composition`;
-  return trimmedTag;
-}
-
-// En la galería se muestran las etiquetas tal cual están (sin modificar)
-function getDisplayTagForGallery(tag) {
-  return tag.trim();
-}
-
-// Inicializa galería
-async function initGallery() {
+// Función para cargar los datos JSON de miniaturas
+async function loadGalleryItems() {
   try {
-    const response = await fetch('galeria_miniaturas.json');
-    if (!response.ok) throw new Error('Failed to load gallery data');
+    const response = await fetch('scripts/galeria_miniaturas.json');
+    if (!response.ok) throw new Error('Error cargando galería');
     galleryItems = await response.json();
-
-    renderGallery(galleryItems);
+    filteredItems = [...galleryItems];
   } catch (e) {
-    console.error('Error cargando galería:', e);
-    document.getElementById('gallery-grid').innerHTML = '<p>Error loading gallery.</p>';
+    console.error(e);
   }
-
-  await loadTags();
-  // Aquí puedes cargar categorías, ratings, etc. si los tienes
-  document.getElementById('gallery-count').textContent = `${galleryItems.length} items found`;
 }
 
-// Carga tags para filtros desde tags-data.json
+// Función para cargar tags desde JSON y ponerlos en el div #tags
 async function loadTags() {
   try {
-    const response = await fetch('tags-data.json');
-    if (!response.ok) throw new Error('Failed to load tags data');
+    const response = await fetch('scripts/tags-data.json');
+    if (!response.ok) throw new Error('Error cargando tags');
     const tags = await response.json();
 
-    const container = document.createElement('div');
-    container.id = 'tags';
+    const container = document.getElementById('tags');
+    container.innerHTML = ''; // limpia contenido previo
 
     tags.forEach(rawTag => {
       const div = document.createElement('div');
@@ -65,94 +46,168 @@ async function loadTags() {
 
       container.appendChild(div);
     });
-
-    // Añadimos el contenedor de tags antes de la galería
-    document.querySelector('.gallery-content').insertBefore(container, document.getElementById('gallery-grid'));
   } catch (e) {
-    console.error('Error cargando tags:', e);
+    console.error(e);
   }
 }
 
-// Renderiza galería con las etiquetas originales (sin modificar)
-function renderGallery(items) {
-  const grid = document.getElementById('gallery-grid');
-  grid.innerHTML = '';
+// Función para mostrar la galería filtrada en el div #gallery-grid
+function renderGallery() {
+  const container = document.getElementById('gallery-grid');
+  container.innerHTML = '';
 
-  items.forEach(item => {
-    const tagsHtml = item.tags
-      .filter(t => t.trim() !== "")
-      .slice(0, 3)
-      .map(t => `<span class="item-tag">${getDisplayTagForGallery(t)}</span>`)
-      .join('');
+  if (filteredItems.length === 0) {
+    container.innerHTML = '<p>No items found.</p>';
+    updateGalleryCount(0);
+    return;
+  }
 
-    const variantesHtml = item.variantesUrl && item.variantesUrl.length > 0
-      ? `<span class="Variantes">${item.variantesUrl.length} Variante${item.variantesUrl.length > 1 ? 's' : ''}</span>`
-      : '';
+  filteredItems.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'gallery-item';
 
-    const itemHtml = `
-      <div class="gallery-item">
-        <a href="imagen.html?id=${item.id}">
-          <div class="gallery-image">
-            <img src="${item.imageUrl}" alt="${item.titulo}">
-            <div class="gallery-overlay">
-              <div class="overlay-content">
-                ${variantesHtml}
-                <div class="item-tags">${tagsHtml}</div>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
+    div.innerHTML = `
+      <img src="${item.imageUrl}" alt="${item.title}" loading="lazy">
+      <h4>${item.title}</h4>
+      <p>${item.description || ''}</p>
     `;
 
-    grid.innerHTML += itemHtml;
+    container.appendChild(div);
   });
 
-  document.getElementById('gallery-count').textContent = `${items.length} item${items.length !== 1 ? 's' : ''} found`;
+  updateGalleryCount(filteredItems.length);
 }
 
-// Función para filtrar la galería
+// Actualiza el texto que indica cuántos items hay
+function updateGalleryCount(count) {
+  const p = document.getElementById('gallery-count');
+  p.textContent = `${count} item${count !== 1 ? 's' : ''} found`;
+}
+
+// Lógica para filtrar la galería según filtros aplicados
 function filterGallery() {
-  let filtered = galleryItems;
+  filteredItems = galleryItems.filter(item => {
+    // Filtrar por categoría si existe
+    if (currentCategory && item.category !== currentCategory) return false;
 
-  if (currentCategory) {
-    filtered = filtered.filter(item => item.category === currentCategory);
-  }
+    // Filtrar por tags (todas las tags seleccionadas deben estar en item.tags)
+    if (selectedTags.length > 0) {
+      if (!item.tags || !selectedTags.every(tag => item.tags.includes(tag))) {
+        return false;
+      }
+    }
 
-  if (selectedTags.length > 0) {
-    filtered = filtered.filter(item =>
-      selectedTags.some(tag => item.tags.map(t => t.trim()).includes(tag))
-    );
-  }
+    // Filtrar por búsqueda (en título o descripción)
+    if (searchTerm) {
+      const text = (item.title + ' ' + (item.description || '')).toLowerCase();
+      if (!text.includes(searchTerm.toLowerCase())) return false;
+    }
 
-  if (selectedRating.length > 0) {
-    filtered = filtered.filter(item => selectedRating.includes(item.rating));
-  }
+    // Aquí podrías agregar filtro por rating cuando esté implementado
 
-  if (searchTerm) {
-    const term = searchTerm.toLowerCase();
-    filtered = filtered.filter(item =>
-      item.titulo.toLowerCase().includes(term) ||
-      item.tags.some(tag => tag.toLowerCase().includes(term))
-    );
-  }
+    return true;
+  });
 
-  renderGallery(filtered);
+  renderGallery();
 }
 
-// Maneja selección/desselección de tags para filtro
-function toggleTag(element) {
-  const tag = element.dataset.rawTag || element.textContent.trim();
-  element.classList.toggle('active');
+// Función que limpia todos los filtros y recarga la galería
+function clearFilters() {
+  selectedTags = [];
+  currentCategory = null;
+  selectedRating = [];
+  searchTerm = '';
+  document.getElementById('search-input').value = '';
+
+  // Quitar selección visual de tags
+  document.querySelectorAll('.tag-item.selected').forEach(div => {
+    div.classList.remove('selected');
+  });
+
+  filterGallery();
+  // Ocultar botón limpiar búsqueda
+  const clearBtn = document.querySelector('.clear-search');
+  if (clearBtn) clearBtn.style.display = 'none';
+}
+
+// Función para limpiar búsqueda únicamente
+function clearSearch() {
+  searchTerm = '';
+  document.getElementById('search-input').value = '';
+  filterGallery();
+
+  const clearBtn = document.querySelector('.clear-search');
+  if (clearBtn) clearBtn.style.display = 'none';
+}
+
+// Toggle visual y lógico de tag cuando se hace click
+function toggleTag(div) {
+  const tag = div.dataset.rawTag;
 
   if (selectedTags.includes(tag)) {
     selectedTags = selectedTags.filter(t => t !== tag);
+    div.classList.remove('selected');
   } else {
     selectedTags.push(tag);
+    div.classList.add('selected');
   }
 
   filterGallery();
 }
 
-// Inicializa al cargar DOM
-document.addEventListener('DOMContentLoaded', initGallery);
+// Helper para que los tags se vean más "limpios"
+function getDisplayTagForFilter(rawTag) {
+  return rawTag.replace(/_/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2');
+}
+
+// Toggle para mostrar u ocultar secciones del sidebar
+function toggleSection(id) {
+  const section = document.getElementById(id);
+  if (!section) return;
+
+  if (section.style.display === 'none' || section.style.display === '') {
+    section.style.display = 'block';
+  } else {
+    section.style.display = 'none';
+  }
+}
+
+// Inicializa eventos y carga todo
+async function initGallery() {
+  await loadGalleryItems();
+  await loadTags();
+
+  renderGallery();
+
+  // Eventos para búsqueda
+  const searchInput = document.getElementById('search-input');
+  const clearSearchBtn = document.querySelector('.clear-search');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', e => {
+      searchTerm = e.target.value.trim();
+      filterGallery();
+
+      if (clearSearchBtn) {
+        clearSearchBtn.style.display = searchTerm ? 'inline-block' : 'none';
+      }
+    });
+  }
+
+  if (clearSearchBtn) {
+    clearSearchBtn.style.display = 'none';
+    clearSearchBtn.addEventListener('click', clearSearch);
+  }
+
+  // Por defecto mostrar categorías y tags abiertas (opcional)
+  toggleSection('categories');
+  toggleSection('tags');
+}
+
+// Llamar initGallery al cargar el script (por eso defer es perfecto)
+initGallery();
+
+// Exporta funciones que se usan desde HTML
+window.clearFilters = clearFilters;
+window.clearSearch = clearSearch;
+window.toggleSection = toggleSection;
