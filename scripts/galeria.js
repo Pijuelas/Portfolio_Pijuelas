@@ -4,17 +4,21 @@ let selectedRating = [];
 let selectedTags = [];
 let searchTerm = '';
 
+
 // Añadimos "Text" con etiqueta especial también
-const tagsWithCompositionLabel = ["Pyramid", "Symmetrical", "Asymmetrical", "Radial", "Text"];
+const visualTagNames = {
+    "Symmetrical": "Symmetrical Composition",
+    "Asymmetrical": "Asymmetrical Composition",
+    "Pyramid": "Pyramid Composition",
+    "Text": "Text as Main Element"
+};
 
 // Esta función devuelve el nombre visual que se mostrará en el sidebar
 function getDisplayTag(tag) {
     const trimmedTag = tag.trim();
-    if (trimmedTag === "Text") {
-        return "Text as Main Element";  // 🔁 CAMBIO: texto especial para "Text"
-    }
-    return tagsWithCompositionLabel.includes(trimmedTag) ? `${trimmedTag} Composition` : trimmedTag;
+    return visualTagNames[trimmedTag] || trimmedTag;
 }
+
 
 // Inicializa la galería
 async function initGallery() {
@@ -86,11 +90,8 @@ async function loadTags() {
         tags.forEach(tag => {
             const div = document.createElement('div');
             div.className = 'tag-item';
-
-            // Mostrar versión visual, guardar versión original para filtro
-            div.textContent = getDisplayTag(tag);
-            div.dataset.rawTag = tag.trim();  // 🔁 CAMBIO: valor original para filtro
-
+            div.textContent = getDisplayTag(tag); // ← mostrar versión visual
+            div.dataset.tag = tag.trim();         // ← mantener valor real para filtrar
             div.onclick = () => toggleTag(div);
             container.appendChild(div);
         });
@@ -169,8 +170,7 @@ function filterByCategory(category, element) {
 
 // Activa/desactiva tags
 function toggleTag(element) {
-    // 🔁 CAMBIO: Usar valor original, no el mostrado
-    const tag = element.dataset.rawTag || element.textContent;
+    const tag = element.dataset.tag;
     element.classList.toggle('active');
 
     if (selectedTags.includes(tag)) {
@@ -181,6 +181,7 @@ function toggleTag(element) {
 
     filterGallery();
 }
+
 
 // Activa/desactiva rating
 function toggleRating(element) {
