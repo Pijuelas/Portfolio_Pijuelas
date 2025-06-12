@@ -13,7 +13,7 @@ function getDisplayTag(tag) {
     if (trimmedTag === "Text") {
         return "Text as Main Element";  // 🔁 CAMBIO: texto especial para "Text"
     }
-    return tagsWithCompositionLabel.includes(trimmedTag) ? ${trimmedTag} Composition : trimmedTag;
+    return tagsWithCompositionLabel.includes(trimmedTag) ? `${trimmedTag} Composition` : trimmedTag;
 }
 
 // Inicializa la galería
@@ -105,27 +105,27 @@ function renderGallery(items) {
     grid.innerHTML = '';
 
     items.forEach(item => {
-        const itemHtml = 
+        const itemHtml = `
             <div class="gallery-item">
                 <a href="imagen.html?id=${item.id}">
                     <div class="gallery-image">
                         <img src="${item.imageUrl}" alt="${item.titulo}">
                         <div class="gallery-overlay">
                             <div class="overlay-content">
-                                ${item.variantesUrl && item.variantesUrl.length > 0 ? <span class="Variantes">${item.variantesUrl.length} Variante${item.variantesUrl.length > 1 ? 's' : ''}</span> : ''}
+                                ${item.variantesUrl && item.variantesUrl.length > 0 ? `<span class="Variantes">${item.variantesUrl.length} Variante${item.variantesUrl.length > 1 ? 's' : ''}</span>` : ''}
                                 <div class="item-tags">
-                                    ${item.tags.map(tag => <span class="item-tag">${tag.trim()}</span>).join('')}
+                                    ${item.tags.map(tag => `<span class="item-tag">${tag.trim()}</span>`).join('')}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
-        ;
+        `;
         grid.innerHTML += itemHtml;
     });
 
-    document.getElementById('gallery-count').textContent = ${items.length} ${items.length === 1 ? 'item' : 'items'} found;
+    document.getElementById('gallery-count').textContent = `${items.length} ${items.length === 1 ? 'item' : 'items'} found`;
 }
 
 // Filtra la galería
@@ -241,4 +241,4 @@ function toggleSection(sectionId) {
 }
 
 // Cuando el DOM esté listo, iniciar galería
-document.addEventListener('DOMContentLoaded', initGallery)
+document.addEventListener('DOMContentLoaded', initGallery);
