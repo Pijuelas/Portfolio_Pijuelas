@@ -13,13 +13,8 @@ function getDisplayTag(tag) {
     if (trimmedTag === "Text") {
         return "Text as Main Element";
     }
-    if (tagsWithCompositionLabel.includes(trimmedTag)) {
-        return `${trimmedTag} Composition`;
-    }
-    return trimmedTag;
+    return tagsWithCompositionLabel.includes(trimmedTag) ? `${trimmedTag} Composition` : trimmedTag;
 }
-
-let selectedTags = [];
 
 // Inicia la galería
 async function initGallery() {
@@ -80,7 +75,6 @@ async function loadCategories() {
 }
 
 // Cargar tags
-// Cargar tags desde JSON
 async function loadTags() {
     try {
         const response = await fetch('json/tags-data.json');
@@ -90,11 +84,10 @@ async function loadTags() {
         const container = document.getElementById('tags');
 
         tags.forEach(tag => {
-            const rawTag = tag.trim();
             const div = document.createElement('div');
             div.className = 'tag-item';
-            div.textContent = getDisplayTag(rawTag);   // ← nombre visual
-            div.dataset.rawTag = rawTag;               // ← valor real
+            div.textContent = getDisplayTag(tag);
+            div.dataset.rawTag = tag.trim();
             div.onclick = () => toggleTag(div);
             container.appendChild(div);
         });
@@ -103,37 +96,64 @@ async function loadTags() {
     }
 }
 
-
 // Renderizar galería
 function renderGallery(items) {
-    const container = document.getElementById('gallery');
-    container.innerHTML = '';
+    const grid = document.getElementById('gallery-grid');
+    grid.innerHTML = '';
 
     items.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'gallery-item';
-        div.dataset.tags = item.tags.join(',');  // ← mantiene los tags reales
-
-        div.innerHTML = `
-            <img src="${item.image}" alt="${item.title}" />
-            <h3>${item.title}</h3>
-            <div class="tags">
-                ${item.tags.map(tag => `<span class="item-tag">${tag.trim()}</span>`).join('')}
+        const itemHtml = `
+            <div class="gallery-item">
+                <a href="imagen.html?id=${item.id}">
+                    <div class="gallery-image">
+                        <img src="${item.imageUrl}" alt="${item.titulo}">
+                        <div class="gallery-overlay">
+                            <div class="overlay-content">
+                                ${item.variantesUrl && item.variantesUrl.length > 0 ? `<span class="Variantes">${item.variantesUrl.length} Variante${item.variantesUrl.length > 1 ? 's' : ''}</span>` : ''}
+                                <div class="item-tags">
+                                    ${item.tags.slice(0, 3).map(tag => `<span class="item-tag">${getDisplayTag(tag.trim())}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
         `;
-        container.appendChild(div);
+        grid.innerHTML += itemHtml;
     });
+
+    document.getElementById('gallery-count').textContent = `${items.length} ${items.length === 1 ? 'item' : 'items'} found`;
 }
 
 // Filtrado general
 function filterGallery() {
-    const galleryItems = document.querySelectorAll('.gallery-item');
+    let filtered = galleryItems;
 
-    galleryItems.forEach(item => {
-        const itemTags = item.dataset.tags.split(',').map(tag => tag.trim());
-        const matches = selectedTags.every(tag => itemTags.includes(tag));
-        item.style.display = matches ? 'block' : 'none';
-    });
+    if (currentCategory) {
+        filtered = filtered.filter(item => item.category === currentCategory);
+    }
+
+    if (selectedTags.length > 0) {
+        filtered = filtered.filter(item =>
+            selectedTags.some(tag => item.tags.map(t => t.trim()).includes(tag))
+        );
+    }
+
+    if (selectedRating.length > 0) {
+        filtered = filtered.filter(item =>
+            selectedRating.includes(item.rating)
+        );
+    }
+
+    if (searchTerm) {
+        const term = searchTerm.toLowerCase();
+        filtered = filtered.filter(item =>
+            item.titulo.toLowerCase().includes(term) ||
+            item.tags.some(tag => tag.toLowerCase().includes(term))
+        );
+    }
+
+    renderGallery(filtered);
 }
 
 // Cambia categoría
@@ -146,7 +166,7 @@ function filterByCategory(category, element) {
 
 // Activa/desactiva tag
 function toggleTag(element) {
-    const tag = element.dataset.rawTag;  // ← siempre usa el valor real
+    const tag = element.dataset.rawTag || element.textContent.trim();
     element.classList.toggle('active');
 
     if (selectedTags.includes(tag)) {
@@ -155,7 +175,7 @@ function toggleTag(element) {
         selectedTags.push(tag);
     }
 
-    filterGallery();  // ← asegúrate que esta función filtra usando item.tags vs selectedTags
+    filterGallery();
 }
 
 // Activa/desactiva rating
