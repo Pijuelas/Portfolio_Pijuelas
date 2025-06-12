@@ -4,6 +4,18 @@ let selectedRating = [];
 let selectedTags = [];
 let searchTerm = '';
 
+// Añadimos "Text" con etiqueta especial también
+const tagsWithCompositionLabel = ["Pyramid", "Symmetrical", "Asymmetrical", "Radial", "Text"];
+
+// Esta función devuelve el nombre visual que se mostrará en el sidebar
+function getDisplayTag(tag) {
+    const trimmedTag = tag.trim();
+    if (trimmedTag === "Text") {
+        return "Text as Main Element";  // 🔁 CAMBIO: texto especial para "Text"
+    }
+    return tagsWithCompositionLabel.includes(trimmedTag) ? ${trimmedTag} Composition : trimmedTag;
+}
+
 // Inicializa la galería
 async function initGallery() {
     try {
@@ -74,7 +86,11 @@ async function loadTags() {
         tags.forEach(tag => {
             const div = document.createElement('div');
             div.className = 'tag-item';
-            div.textContent = tag;
+
+            // Mostrar versión visual, guardar versión original para filtro
+            div.textContent = getDisplayTag(tag);
+            div.dataset.rawTag = tag.trim();  // 🔁 CAMBIO: valor original para filtro
+
             div.onclick = () => toggleTag(div);
             container.appendChild(div);
         });
@@ -83,59 +99,34 @@ async function loadTags() {
     }
 }
 
-// Cargar rating desde JSON     NO MOSTRAR DE MOMENTO HASTA HABER TERMINADO ///////////////////////////////////////////////
-//async function loadRating() {
-//    try {
-//        const response = await fetch('json/rating-data.json');
-//        if (!response.ok) throw new Error('Failed to load rating JSON');
-//
-//       const ratingData = await response.json();
-//        const container = document.getElementById('rating');
-//        container.innerHTML = '';  // Limpia antes de insertar
-
-        // Aquí iteramos sobre el array, si tu JSON es un array de ratings
-//        ratingData.forEach(rating => {
-//            const div = document.createElement('div');
-//            div.className = 'rating-item';
-//            div.textContent = rating; // O rating.valor si es objeto
-//            div.onclick = () => toggleRating(div);
-//            container.appendChild(div);
-//        });
-//    } catch (error) {
-//        console.error('Error loading rating:', error);
-//    }
-//}
-
-
 // Renderiza los ítems de la galería con enlace a imagen.html?id={id}
 function renderGallery(items) {
     const grid = document.getElementById('gallery-grid');
     grid.innerHTML = '';
 
     items.forEach(item => {
-        const itemHtml = `
+        const itemHtml = 
             <div class="gallery-item">
                 <a href="imagen.html?id=${item.id}">
                     <div class="gallery-image">
                         <img src="${item.imageUrl}" alt="${item.titulo}">
                         <div class="gallery-overlay">
                             <div class="overlay-content">
-                                ${item.variantesUrl && item.variantesUrl.length > 0 ? `<span class="Variantes">${item.variantesUrl.length} Variante${item.variantesUrl.length > 1 ? 's' : ''}</span>` : ''}
+                                ${item.variantesUrl && item.variantesUrl.length > 0 ? <span class="Variantes">${item.variantesUrl.length} Variante${item.variantesUrl.length > 1 ? 's' : ''}</span> : ''}
                                 <div class="item-tags">
-                                    ${item.tags.map(tag => `<span class="item-tag">${tag}</span>`).join('')}
+                                    ${item.tags.map(tag => <span class="item-tag">${tag.trim()}</span>).join('')}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
-        `;
+        ;
         grid.innerHTML += itemHtml;
     });
 
-    document.getElementById('gallery-count').textContent = `${items.length} ${items.length === 1 ? 'item' : 'items'} found`;
+    document.getElementById('gallery-count').textContent = ${items.length} ${items.length === 1 ? 'item' : 'items'} found;
 }
-
 
 // Filtra la galería
 function filterGallery() {
@@ -168,8 +159,6 @@ function filterGallery() {
     renderGallery(filtered);
 }
 
-
-
 // Filtra por categoría
 function filterByCategory(category, element) {
     currentCategory = category;
@@ -180,7 +169,8 @@ function filterByCategory(category, element) {
 
 // Activa/desactiva tags
 function toggleTag(element) {
-    const tag = element.textContent;
+    // 🔁 CAMBIO: Usar valor original, no el mostrado
+    const tag = element.dataset.rawTag || element.textContent;
     element.classList.toggle('active');
 
     if (selectedTags.includes(tag)) {
@@ -235,7 +225,6 @@ function clearFilters() {
     clearSearchBtn.style.display = 'none';
 
     selectedRating = [];
-    
     document.querySelectorAll('.rating-item').forEach(item => item.classList.remove('active'));
 
     filterGallery();
@@ -252,4 +241,4 @@ function toggleSection(sectionId) {
 }
 
 // Cuando el DOM esté listo, iniciar galería
-document.addEventListener('DOMContentLoaded', initGallery);
+document.addEventListener('DOMContentLoaded', initGallery)
