@@ -1,0 +1,34 @@
+/* Home Page Styles */
+.home-page {
+  min-height: 100vh;
+}
+
+.featured-section {
+  padding: 4rem 2rem;
+  background-color: var(--bg-color);
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 992px) {
+  .featured-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-section {
+    padding: 2rem 1rem;
+  }
+  
+  .featured-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
