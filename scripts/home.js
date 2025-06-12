@@ -92,4 +92,55 @@
     }
 
     });
+
+    
 });
+
+async function loadFeaturedVideos() {
+    try {
+        const response = await fetch('json/videos-index.json');
+        if (!response.ok) throw new Error('No se pudo cargar la galería de videos');
+        let items = await response.json();
+
+        // Mostrar solo los primeros 3
+        items = items.slice(0, 3);
+
+        const featuredGrid = document.querySelector('.featured-grid');
+        if (!featuredGrid) {
+            console.warn('No se encontró el contenedor .featured-grid');
+            return;
+        }
+
+        featuredGrid.innerHTML = '';
+
+        items.forEach(item => {
+            const itemHtml = `
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <img src="${item.imageUrl}" alt="${item.titulo}">
+                        <div class="gallery-overlay">
+                            <div class="overlay-content">
+                                <span class="category">${item.category}</span>
+                                <h3>${item.titulo}</h3>
+                                <div class="item-tags">
+                                    ${item.tags.map(tag => `<span class="item-tag">${tag}</span>`).join('')}
+                                </div>
+                                <a href="imagen.html?id=${item.id}">
+                                    <button class="view-btn">View Details</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            featuredGrid.innerHTML += itemHtml;
+        });
+
+    } catch (error) {
+        console.error('Error cargando los videos destacados:', error);
+        const featuredGrid = document.querySelector('.featured-grid');
+        if (featuredGrid) {
+            featuredGrid.innerHTML = '<p>Error al cargar los videos destacados.</p>';
+        }
+    }
+}
