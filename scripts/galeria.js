@@ -4,12 +4,15 @@ let selectedRating = [];
 let selectedTags = [];
 let searchTerm = '';
 
+// Añadimos "Text" con etiqueta especial también
+const tagsWithCompositionLabel = ["Pyramid", "Symmetrical", "Asymmetrical", "Radial", "Text"];
 
-const tagsWithCompositionLabel = ["Pyramid", "Symmetrical", "Asymmetrical", "Radial"];
-
-
+// Esta función devuelve el nombre visual que se mostrará en el sidebar
 function getDisplayTag(tag) {
     const trimmedTag = tag.trim();
+    if (trimmedTag === "Text") {
+        return "Text as Main Element";  // 🔁 CAMBIO: texto especial para "Text"
+    }
     return tagsWithCompositionLabel.includes(trimmedTag) ? `${trimmedTag} Composition` : trimmedTag;
 }
 
@@ -84,9 +87,9 @@ async function loadTags() {
             const div = document.createElement('div');
             div.className = 'tag-item';
 
-           
+            // Mostrar versión visual, guardar versión original para filtro
             div.textContent = getDisplayTag(tag);
-            div.dataset.rawTag = tag.trim();
+            div.dataset.rawTag = tag.trim();  // 🔁 CAMBIO: valor original para filtro
 
             div.onclick = () => toggleTag(div);
             container.appendChild(div);
