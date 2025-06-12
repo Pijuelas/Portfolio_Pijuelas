@@ -8,6 +8,7 @@ let searchTerm = '';
 // Añadimos "Text" con etiqueta especial también
 const visualTagNames = {
     "Symmetrical": "Symmetrical Composition",
+    "Radial": "Radial Composition"
     "Asymmetrical": "Asymmetrical Composition",
     "Pyramid": "Pyramid Composition",
     "Text": "Text as Main Element"
