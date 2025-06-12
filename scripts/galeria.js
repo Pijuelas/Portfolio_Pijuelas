@@ -30,7 +30,6 @@ async function initGallery() {
 
     await loadTags();
     await loadCategories();
-    // await loadRating();
 
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
@@ -74,7 +73,6 @@ async function loadCategories() {
     }
 }
 
-// Cargar tags
 // Cargar tags desde JSON
 async function loadTags() {
     try {
@@ -88,12 +86,11 @@ async function loadTags() {
             const div = document.createElement('div');
             div.className = 'tag-item';
 
-            // ✅ Visual friendly name only for display, keep raw tag for logic and display in miniaturas
             const rawTag = tag.trim();
             const displayName = getDisplayTag(rawTag);
 
             div.textContent = displayName;
-            div.dataset.rawTag = rawTag;  // 🔁 Keep raw tag for filtering
+            div.dataset.rawTag = rawTag;
 
             div.onclick = () => toggleTag(div);
             container.appendChild(div);
@@ -102,7 +99,6 @@ async function loadTags() {
         console.error('Error loading tags:', error);
     }
 }
-
 
 // Renderizar galería
 function renderGallery(items) {
