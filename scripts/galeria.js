@@ -4,19 +4,7 @@ let selectedRating = [];
 let selectedTags = [];
 let searchTerm = '';
 
-// Etiquetas especiales con sufijo "Composition"
-const tagsWithCompositionLabel = ["Pyramid", "Symmetrical", "Asymmetrical", "Radial", "Text"];
-
-// Traduce visualmente una etiqueta para mostrarla
-function getDisplayTag(tag) {
-    const trimmedTag = tag.trim();
-    if (trimmedTag === "Text") {
-        return "Text as Main Element";
-    }
-    return tagsWithCompositionLabel.includes(trimmedTag) ? `${trimmedTag} Composition` : trimmedTag;
-}
-
-// Inicia la galería
+// Inicializa la galería
 async function initGallery() {
     try {
         const response = await fetch('json/galeria_miniaturas.json');
@@ -30,6 +18,7 @@ async function initGallery() {
 
     await loadTags();
     await loadCategories();
+    //await loadRating();   NO MOSTRAR DE MOMENTO HASTA HABER TERMINADO
 
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
@@ -51,7 +40,7 @@ async function initGallery() {
     });
 }
 
-// Cargar categorías
+// Cargar categorías desde JSON
 async function loadCategories() {
     try {
         const response = await fetch('json/categories-data.json');
@@ -85,13 +74,7 @@ async function loadTags() {
         tags.forEach(tag => {
             const div = document.createElement('div');
             div.className = 'tag-item';
-
-            const rawTag = tag.trim();
-            const displayName = getDisplayTag(rawTag);
-
-            div.textContent = displayName;
-            div.dataset.rawTag = rawTag;
-
+            div.textContent = tag;
             div.onclick = () => toggleTag(div);
             container.appendChild(div);
         });
@@ -100,7 +83,31 @@ async function loadTags() {
     }
 }
 
-// Renderizar galería
+// Cargar rating desde JSON     NO MOSTRAR DE MOMENTO HASTA HABER TERMINADO ///////////////////////////////////////////////
+//async function loadRating() {
+//    try {
+//        const response = await fetch('json/rating-data.json');
+//        if (!response.ok) throw new Error('Failed to load rating JSON');
+//
+//       const ratingData = await response.json();
+//        const container = document.getElementById('rating');
+//        container.innerHTML = '';  // Limpia antes de insertar
+
+        // Aquí iteramos sobre el array, si tu JSON es un array de ratings
+//        ratingData.forEach(rating => {
+//            const div = document.createElement('div');
+//            div.className = 'rating-item';
+//            div.textContent = rating; // O rating.valor si es objeto
+//            div.onclick = () => toggleRating(div);
+//            container.appendChild(div);
+//        });
+//    } catch (error) {
+//        console.error('Error loading rating:', error);
+//    }
+//}
+
+
+// Renderiza los ítems de la galería con enlace a imagen.html?id={id}
 function renderGallery(items) {
     const grid = document.getElementById('gallery-grid');
     grid.innerHTML = '';
@@ -115,7 +122,7 @@ function renderGallery(items) {
                             <div class="overlay-content">
                                 ${item.variantesUrl && item.variantesUrl.length > 0 ? `<span class="Variantes">${item.variantesUrl.length} Variante${item.variantesUrl.length > 1 ? 's' : ''}</span>` : ''}
                                 <div class="item-tags">
-                                    ${item.tags.slice(0, 3).map(tag => `<span class="item-tag">${getDisplayTag(tag.trim())}</span>`).join('')}
+                                    ${item.tags.map(tag => `<span class="item-tag">${tag}</span>`).join('')}
                                 </div>
                             </div>
                         </div>
@@ -129,7 +136,8 @@ function renderGallery(items) {
     document.getElementById('gallery-count').textContent = `${items.length} ${items.length === 1 ? 'item' : 'items'} found`;
 }
 
-// Filtrado general
+
+// Filtra la galería
 function filterGallery() {
     let filtered = galleryItems;
 
@@ -139,7 +147,7 @@ function filterGallery() {
 
     if (selectedTags.length > 0) {
         filtered = filtered.filter(item =>
-            selectedTags.some(tag => item.tags.map(t => t.trim()).includes(tag))
+            selectedTags.some(tag => item.tags.includes(tag))
         );
     }
 
@@ -160,7 +168,9 @@ function filterGallery() {
     renderGallery(filtered);
 }
 
-// Cambia categoría
+
+
+// Filtra por categoría
 function filterByCategory(category, element) {
     currentCategory = category;
     document.querySelectorAll('.category-item').forEach(item => item.classList.remove('active'));
@@ -168,9 +178,9 @@ function filterByCategory(category, element) {
     filterGallery();
 }
 
-// Activa/desactiva tag
+// Activa/desactiva tags
 function toggleTag(element) {
-    const tag = element.dataset.rawTag || element.textContent.trim();
+    const tag = element.textContent;
     element.classList.toggle('active');
 
     if (selectedTags.includes(tag)) {
@@ -196,7 +206,7 @@ function toggleRating(element) {
     filterGallery();
 }
 
-// Limpiar búsqueda
+// Limpia el campo de búsqueda
 function clearSearch() {
     const searchInput = document.getElementById('search-input');
     const clearSearchBtn = document.querySelector('.clear-search');
@@ -207,7 +217,7 @@ function clearSearch() {
     filterGallery();
 }
 
-// Limpiar filtros
+// Limpia todos los filtros
 function clearFilters() {
     currentCategory = null;
     selectedTags = [];
@@ -225,12 +235,13 @@ function clearFilters() {
     clearSearchBtn.style.display = 'none';
 
     selectedRating = [];
+    
     document.querySelectorAll('.rating-item').forEach(item => item.classList.remove('active'));
 
     filterGallery();
 }
 
-// Alternar secciones
+// Alterna secciones del sidebar
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);
     const header = section.previousElementSibling;
@@ -240,5 +251,5 @@ function toggleSection(sectionId) {
     chevron.style.transform = section.style.display === 'none' ? 'rotate(0deg)' : 'rotate(180deg)';
 }
 
-// Inicia cuando el DOM está listo
+// Cuando el DOM esté listo, iniciar galería
 document.addEventListener('DOMContentLoaded', initGallery);
