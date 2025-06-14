@@ -140,7 +140,7 @@ function filterGallery() {
 
     if (selectedTags.length > 0) {
         filtered = filtered.filter(item =>
-            selectedTags.some(tag => item.tags.includes(tag))
+            selectedTags.every(tag => item.tags.includes(tag))
         );
     }
 
