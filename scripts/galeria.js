@@ -116,7 +116,7 @@ function renderGallery(items) {
                             <div class="overlay-content">
                                 ${item.variantesUrl && item.variantesUrl.length > 0 ? `<span class="Variantes">${item.variantesUrl.length} Variante${item.variantesUrl.length > 1 ? 's' : ''}</span>` : ''}
                                 <div class="item-tags">
-                                    ${item.tags.slice(0, 3).map(tag => `<span class="item-tag">${getDisplayTag(tag)}</span>`).join('')}
+                                    ${item.tags.slice(0, 3).map(tag => `<span class="item-tag">${tag.trim()}</span>`).join('')}
                                 </div>
                             </div>
                         </div>
