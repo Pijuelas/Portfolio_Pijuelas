@@ -63,15 +63,18 @@ async function loadCategories() {
         const response = await fetch('json/categories-data.json');
         if (!response.ok) throw new Error('Failed to load categories JSON');
 
-        const categories = await response.json();
+        const categoriesFromJson = await response.json();
         const container = document.getElementById('categories');
+
+        // Añadir "All" al principio manualmente
+        const categories = ["All", ...categoriesFromJson];
 
         categories.forEach((category, index) => {
             const div = document.createElement('div');
             div.className = 'category-item';
             div.textContent = category;
             div.onclick = () => filterByCategory(category === 'All' ? null : category, div);
-            if (index === 0) div.classList.add('active');
+            if (index === 0) div.classList.add('active'); // marcar "All" como activa al inicio
             container.appendChild(div);
         });
     } catch (error) {
