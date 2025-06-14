@@ -1,31 +1,30 @@
 [
     {
         "id": 17,
-        "titulo": "Como conseguir saldo infinito en steam gratis",
-        "category": "Saldo",
+        "titulo": "Commission for Kevin Elliott",
+        "category": "Finance",
         "rating": "",
-        "tags": ["arte", "hola", "expresión"],
-        "imageUrl": "https://pbs.twimg.com/media/GqHP1W7WMAAYZVg?format=jpg&name=large",
-        "variantesUrl": ["https://pbs.twimg.com/media/Gs61oegWwAAE8z4?format=jpg&name=large"]
+        "tags": ["Close-Up", "Asymmetrical", "Text"],
+        "imageUrl": "https://pbs.twimg.com/media/Gra68-XXsAAQOCi?format=jpg&name=large",
+        "variantesUrl": []
     },
     {
         "id": 2,
         "titulo": "La epidemia de vendehumos de YouTube",
-        "category": "Analisis",
+        "category": "Tutorial",
         "rating": "",
-        "tags": ["Vendehumos", "digital", "color"],
+        "tags": ["Close-Up", "Pyramid", "Radial", "Saturated"],
         "imageUrl": "https://pbs.twimg.com/media/GqHOAW6XcAAX7pu?format=jpg&name=large",
         "variantesUrl": []
     },
     {
         "id": 15,
-        "titulo": "Crecer en YouTube",
-        "category": "Digital",
+        "titulo": "Kai's Nightamre",
+        "category": "Clickbait",
         "rating": "",
-        "tags": ["", "", ""],
-        "imageUrl": "https://pbs.twimg.com/media/GqHKGPlX0AIMNfz?format=jpg&name=large",
-        "variantesUrl": ["https://pbs.twimg.com/media/GqHKGPlX0AIMNfz?format=jpg&name=large",
-        "https://pbs.twimg.com/media/GqHKIqMWcAA99pJ?format=jpg&name=large",
-        "https://pbs.twimg.com/media/GqHKJlUXYAAe7qR?format=jpg&name=large"]
+        "tags": ["Close-Up", "Symmetrical", "Radial", "Saturated"],
+        "imageUrl": "https://pbs.twimg.com/media/GtLarOZXwAAWNkx?format=jpg&name=large",
+        "variantesUrl": ["https://pbs.twimg.com/media/GtLasulXwAAj-nP?format=jpg&name=large",
+        "https://pbs.twimg.com/media/GtLa7HFXEAAEB-x?format=jpg&name=large"]
     }
 ]
