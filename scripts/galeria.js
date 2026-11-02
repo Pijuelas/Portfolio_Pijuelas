@@ -236,6 +236,12 @@ function clearFilters() {
     filterGallery();
 }
 
+// Alterna el sidebar en móvil
+function toggleMobileSidebar() {
+    const sidebar = document.getElementById('gallery-sidebar');
+    if (sidebar) sidebar.classList.toggle('mobile-open');
+}
+
 // Alterna secciones del sidebar
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);

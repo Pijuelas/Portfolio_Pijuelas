@@ -32,7 +32,11 @@
 
     <div class="gallery-page">
         <div class="gallery-container">
-            <aside class="gallery-sidebar">
+            <button class="mobile-sidebar-toggle" type="button" onclick="toggleMobileSidebar()">
+                <span class="toggle-btn">☰ Filters</span>
+            </button>
+            <aside class="gallery-sidebar" id="gallery-sidebar">
+                <div class="mobile-close-btn" onclick="toggleMobileSidebar()" aria-label="Close filters">✕</div>
                 <div class="sidebar-header">
                     <h2>Filters</h2>
                     <button class="clear-btn" onclick="clearFilters()">Clear All</button>

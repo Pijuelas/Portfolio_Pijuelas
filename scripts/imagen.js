@@ -1,7 +1,7 @@
 // scripts/imagen.js
 
 // Cargar datos desde el archivo JSON (ruta absoluta para GitHub Pages)
-fetch('/Portfolio_Pijuelas/json/galeria_miniaturas.json')
+fetch('json/galeria_miniaturas.json')
   .then(response => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -57,7 +57,7 @@ function mostrarImagen(imagenes) {
         ${tags.filter(Boolean).map(tag => `<span class="tag">${tag}</span>`).join('')}
       </div>
       
-      <div class="navigation">
+      <div class="image-navigation">
         <a href="gallery.html" class="back-button">← Volver a la galería</a>
       </div>
     </div>

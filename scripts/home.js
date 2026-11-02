@@ -51,6 +51,21 @@ class TextRotator {
 
 // Esperar al DOM
 document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.querySelector('.navigation');
+    if (nav) {
+        nav.classList.add('is-hidden');
+        let navShown = false;
+        const showNav = () => {
+            if (navShown) return;
+            navShown = true;
+            nav.classList.remove('is-hidden');
+        };
+        setTimeout(showNav, 4000);
+        ['scroll', 'mousemove', 'click', 'touchstart', 'keydown', 'wheel'].forEach(ev => {
+            window.addEventListener(ev, showNav, { once: true, passive: true });
+        });
+    }
+
     const scrollIndicator = document.querySelector('.scroll-indicator');
     const maxScroll = 200;
 
@@ -60,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (textElement) {
             new TextRotator(textElement, ['Thumbnail Designer', 'Visual Creator', 'Content Artist'], 2000);
         }
-    }, 25);
+    }, 2000);
 
     // Logo animación
     setTimeout(() => {
@@ -85,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (scrollIndicator) {
         setTimeout(() => {
             scrollIndicator.style.opacity = 1;
-        }, 6000);
+        }, 6750);
 
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
