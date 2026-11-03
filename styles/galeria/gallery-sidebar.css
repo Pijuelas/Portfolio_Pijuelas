@@ -97,7 +97,7 @@
 }
 
 .search-input-wrapper input::placeholder {
-  color: var(--text-subtle);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .clear-search {
@@ -248,11 +248,15 @@
     max-height: none;
     z-index: 2000;
     transform: translateX(-100%);
-    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.6);
     border-radius: 0;
     padding-top: 5rem;
-    backdrop-filter: blur(24px);
-    width: 320px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    background: var(--bg-elevated);
+    backdrop-filter: none;
+    width: 85%;
+    max-width: 360px;
   }
 
   .gallery-sidebar.mobile-open {
@@ -265,21 +269,24 @@
   }
 
   .toggle-btn {
+    display: block;
     width: 100%;
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
+    background: var(--primary-color);
     padding: 0.9rem 1rem;
     border-radius: var(--radius-md);
-    font-weight: 500;
-    border: 1px solid var(--glass-border);
-    color: var(--secondary-color);
+    font-weight: 700;
+    border: none;
+    color: #ffffff;
     transition: all 0.25s var(--ease);
     cursor: pointer;
     font-family: var(--font-main);
+    font-size: 1rem;
+    text-align: center;
+    box-shadow: 0 8px 20px var(--primary-glow);
   }
 
   .toggle-btn:hover {
-    background: var(--glass-strong);
+    background: #e0052f;
   }
 
   .mobile-close-btn {
@@ -287,7 +294,7 @@
     position: absolute;
     top: 1rem;
     right: 1rem;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.1);
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
@@ -295,11 +302,70 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.25s var(--ease);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--secondary-color);
+    font-size: 1.1rem;
+    font-weight: 700;
   }
 
   .mobile-close-btn:hover {
-    background: rgba(255, 7, 58, 0.5);
+    background: rgba(255, 7, 58, 0.6);
+  }
+
+  /* Improve contrast in mobile drawer */
+  .gallery-sidebar .sidebar-header h2 {
+    color: var(--secondary-color);
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .gallery-sidebar .section-header h3 {
+    color: var(--secondary-color);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .gallery-sidebar .category-item {
+    color: var(--secondary-color);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.7rem 1rem;
+  }
+
+  .gallery-sidebar .category-item.active {
+    color: var(--primary-color);
+    font-weight: 700;
+  }
+
+  .gallery-sidebar .tag-item {
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .gallery-sidebar .tag-item.active {
+    color: var(--primary-color);
+    font-weight: 700;
+  }
+
+  .gallery-sidebar .clear-btn {
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.4rem 0.9rem;
+  }
+
+  .gallery-sidebar .search-input-wrapper {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .gallery-sidebar .search-input-wrapper input {
+    color: var(--secondary-color);
+    font-size: 1rem;
   }
 }
