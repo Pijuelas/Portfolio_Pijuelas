@@ -229,6 +229,53 @@
         "https://pbs.twimg.com/media/G_X29VVXIAAKk4c?format=jpg&name=large",
         "https://pbs.twimg.com/media/G_X29VWXMAA36Ez?format=jpg&name=large",
         "https://pbs.twimg.com/media/G_X29VgWEAAKhpY?format=jpg&name=large"]
+    },
+    {
+        "id": 24,
+        "titulo": "El velocista mas tonto",
+        "category": "StoryTelling",
+        "rating": "",
+        "tags": ["After-Before"],
+        "imageUrl": "https://pbs.twimg.com/media/HLIamgkWcAAq2Rw?format=jpg&name=large",
+        "variantesUrl": ["https://pbs.twimg.com/media/HLIaqBcWgAAlIYx?format=jpg&name=large"]
+    },
+    {
+        "id": 25,
+        "titulo": "Top Supervillains",
+        "category": "StoryTelling",
+        "rating": "",
+        "tags": [],
+        "imageUrl": "https://pbs.twimg.com/media/HLIbdJgW0AA67NZ?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 26,
+        "titulo": "Raymundo",
+        "category": "StoryTelling",
+        "rating": "",
+        "tags": [],
+        "imageUrl": "https://pbs.twimg.com/media/HQCvnueW0AA3ViQ?format=jpg&name=large",
+        "variantesUrl": []
+    },
+    {
+        "id": 27,
+        "titulo": "Probando los menus influencers de BK",
+        "category": "StoryTelling",
+        "rating": "",
+        "tags": [],
+        "imageUrl": "https://pbs.twimg.com/media/HWJtIsBW4AAZMsF?format=jpg&name=large",
+        "variantesUrl": ["https://pbs.twimg.com/media/HWJtGupWsAAXyvZ?format=jpg&name=medium",
+        "https://pbs.twimg.com/media/HWJtGufXUAAbDCs?format=jpg&name=large",
+        "https://pbs.twimg.com/media/HWJtGuvWcAAmgnW?format=jpg&name=large"]
+    },
+    {
+        "id": 28,
+        "titulo": "24h en la rutina de TheGrefg",
+        "category": "StoryTelling",
+        "rating": "",
+        "tags": [],
+        "imageUrl": "https://pbs.twimg.com/media/HWJtTnKXwAAv3G2?format=jpg&name=large",
+        "variantesUrl": []
     }
         
 ]
